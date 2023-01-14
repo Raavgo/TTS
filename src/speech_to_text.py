@@ -102,7 +102,7 @@ def speech_to_text(audio_file, language):
         model_path = './lang_config/' + language.upper()
     else:
         return 'Language not supported'
-    return 'Mocked result' + language + ' ' + audio_file.filename
+    #return 'Mocked result' + language + ' ' + audio_file.filename
     print("Loading model from file")
     model_load_start = timer()
     # sphinx-doc: python_ref_model_start
@@ -152,13 +152,3 @@ def speech_to_text(audio_file, language):
 
 
 
-"""
-def speech_to_text(audio_file, language):
-    if language.upper() in ['EN', 'DE', 'FR', 'ES', 'IT', 'GR']:
-        model_path = './lang_config/' + language.upper()
-    else:
-        return 'Language not supported'
-
-    return "Mock Response"
-
-"""
