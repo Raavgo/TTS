@@ -18,7 +18,8 @@ COPY environment.yml .
 RUN conda env create -f environment.yml
 RUN pip install stt \
     && pip install sox\
-    && pip install flask
+    && pip install flask\
+    && pip install tts
 RUN apt-get update &&\
     apt-get install -y sox
 SHELL ["conda", "run", "-n", "myenv", "/bin/bash", "-c"]
