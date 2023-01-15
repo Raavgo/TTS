@@ -13,8 +13,16 @@ def index():
 @app.route('/speech_to_text', methods=['POST'])
 def speech_to_text_route():
     language = str(request.form['lang'])
-    audio_file = request.files['file']
-    result = speech_to_text(audio_file, language)
+    file = request.files['file']
+    webm_path = "./recording.webm"
+
+    if file:
+        with open(webm_path, "wb") as fp:
+            fp.write(file.read())
+    else:
+        return to_json("No file.")
+
+    result = speech_to_text(webm_path, language)
     #result = "Mocked result" + language + " " + audio_file.filename
     return to_json(result)
 
