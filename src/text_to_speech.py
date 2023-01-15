@@ -30,10 +30,13 @@ class ModelLoader:
 
 def text_to_speech(text, model):
     #hash the text to get a unique filename
-    filename = str(hashlib.md5(text.encode()).hexdigest()) + ".wav"
+    #filename = str(hashlib.md5(text.encode()).hexdigest()) + ".wav"
+    filename = "recording.wav"
     model.tts_to_file(text=text, file_path=filename)
+    return filename
 
 
-def start_text_to_speech(text, language):
-    model_loader = ModelLoader()
-    text_to_speech(text, model_loader.get_model(language))
+def start_text_to_speech(text, model):
+    result = text_to_speech(text, model)
+    print(f"Result: {result}", flush=True)
+    return result
