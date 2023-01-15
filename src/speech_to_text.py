@@ -8,6 +8,7 @@ import shlex
 import subprocess
 import sys
 import wave
+from time import sleep
 from timeit import default_timer as timer
 
 import numpy as np
@@ -86,6 +87,11 @@ def metadata_json_output(metadata):
     ]
     return json.dumps(json_result, indent=2)
 
+def convert(filename):
+    filename = filename[:-4]
+    command = ['ffmpeg', '-i', f'{filename}webm', '-vn', f'{filename}wav']
+    subprocess.run(command,stdout=subprocess.PIPE,stdin=subprocess.PIPE)
+    sleep(1)
 
 class VersionAction(argparse.Action):
     def __init__(self, *args, **kwargs):
@@ -97,9 +103,10 @@ class VersionAction(argparse.Action):
 
 
 def speech_to_text(audio_file, language):
+    convert(audio_file)
     print("Runs speech_to_text")
     if language.upper() in ['EN', 'DE', 'FR', 'ES', 'IT', 'GR']:
-        model_path = './lang_config/' + language.upper()
+        model_path = '../lang_config/' + language.upper()
     else:
         return 'Language not supported'
     #return 'Mocked result' + language + ' ' + audio_file.filename
@@ -119,7 +126,9 @@ def speech_to_text(audio_file, language):
     scorer_load_end = timer() - scorer_load_start
     print("Loaded scorer in {:.3}s.".format(scorer_load_end), file=sys.stderr)
 
+
     fin = wave.open(audio_file, "rb")
+
     fs_orig = fin.getframerate()
     if fs_orig != desired_sample_rate:
         print(
@@ -152,3 +161,5 @@ def speech_to_text(audio_file, language):
 
 
 
+if __name__ == "__main__":
+    print(speech_to_text('../test.wav', 'de'))
