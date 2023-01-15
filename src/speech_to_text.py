@@ -13,7 +13,7 @@ from timeit import default_timer as timer
 
 import numpy as np
 from stt import Model, version
-
+import soundfile as sf
 try:
     from shlex import quote
 except ImportError:
@@ -92,6 +92,7 @@ def convert(filename):
     command = ['ffmpeg', '-i', f'{filename}webm', '-vn', f'{filename}wav']
     subprocess.run(command,stdout=subprocess.PIPE,stdin=subprocess.PIPE)
     sleep(1)
+    return f'{filename}wav'
 
 class VersionAction(argparse.Action):
     def __init__(self, *args, **kwargs):
@@ -102,11 +103,11 @@ class VersionAction(argparse.Action):
         exit(0)
 
 
-def speech_to_text(audio_file, language):
-    convert(audio_file)
+def speech_to_text(audio_file, language, path="../lang_config/"):
+    audio_file = convert(audio_file)
     print("Runs speech_to_text")
     if language.upper() in ['EN', 'DE', 'FR', 'ES', 'IT', 'GR']:
-        model_path = '../lang_config/' + language.upper()
+        model_path = path + language.upper()
     else:
         return 'Language not supported'
     #return 'Mocked result' + language + ' ' + audio_file.filename
@@ -162,4 +163,4 @@ def speech_to_text(audio_file, language):
 
 
 if __name__ == "__main__":
-    print(speech_to_text('../test.wav', 'de'))
+    print(speech_to_text('../test.webm', 'de'))
