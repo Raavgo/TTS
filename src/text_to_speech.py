@@ -33,6 +33,7 @@ def text_to_speech(text, model):
     filename = str(hashlib.md5(text.encode()).hexdigest()) + ".wav"
     model.tts_to_file(text=text, file_path=filename)
 
-if __name__ == "__main__":
+
+def start_text_to_speech(text, language):
     model_loader = ModelLoader()
-    text_to_speech("Hello World", model_loader.get_model("en"))
+    text_to_speech(text, model_loader.get_model(language))
