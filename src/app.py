@@ -1,6 +1,6 @@
 from flask import Flask, request
 from speech_to_text import speech_to_text
-from text_to_speech import start_text_to_speech
+from text_to_speech import text_to_speech
 from text_to_speech import ModelLoader
 
 app = Flask(__name__)
@@ -23,7 +23,7 @@ def speech_to_text_route():
 def text_to_speech_route():
     language = str(request.form['lang'])
     text = str(request.form['text'])
-    start_text_to_speech(text, model_loader.get_model(language))
+    text_to_speech(text, model_loader.get_model(language))
     return 'ok'
 
 
