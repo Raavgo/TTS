@@ -22,7 +22,8 @@ RUN pip install stt \
     && pip install tts
 RUN apt-get update &&\
     apt-get install -y sox &&\
-    apt-get install -y ffmpeg
+    apt-get install -y ffmpeg &&\
+    apt-get install -y espeak
 SHELL ["conda", "run", "-n", "myenv", "/bin/bash", "-c"]
 
 COPY lang_config/ /lang_config/

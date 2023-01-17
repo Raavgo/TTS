@@ -89,7 +89,7 @@ def metadata_json_output(metadata):
 
 def convert(filename):
     filename = filename[:-4]
-    command = ['ffmpeg', '-i', f'{filename}webm', '-vn', f'{filename}wav']
+    command = ['ffmpeg', '-y', '-i', f'{filename}webm', '-vn', f'{filename}wav']
     subprocess.run(command,stdout=subprocess.PIPE,stdin=subprocess.PIPE)
     sleep(1)
     return f'{filename}wav'
